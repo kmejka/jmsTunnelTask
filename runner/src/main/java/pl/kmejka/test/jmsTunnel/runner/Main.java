@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         String queueAddressServer = "tcp://localhost:12345";
-        String queueAddressConsumers = "http://localhost:12345";
+        String queueAddressConsumers = "tcp://localhost:12345";
         String queueName = "fred";
 
         QueueBroker queueBroker = new QueueBroker();
