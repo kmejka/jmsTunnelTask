@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="SbtLocalSettings">
+    <option name="modificationStamps">
+      <map>
+        <entry key="$PROJECT_DIR$/../../../scala-course/03objsets" value="1399829950000" />
+        <entry key="$PROJECT_DIR$/../../../scala-course/funsets" value="1399277354000" />
+        <entry key="$PROJECT_DIR$/../../../scala-course/progfun-recfun" value="1399583893485" />
+        <entry key="$PROJECT_DIR$/../../../scala-course/recfun" value="1399616928100" />
+        <entry key="$USER_HOME$/Downloads/recfun" value="1399494446000" />
+      </map>
+    </option>
+  </component>
+</project>
+
