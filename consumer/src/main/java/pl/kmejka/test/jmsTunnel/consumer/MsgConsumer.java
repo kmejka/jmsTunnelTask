@@ -3,6 +3,7 @@ package pl.kmejka.test.jmsTunnel.consumer;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.kmejka.test.jmsTunnel.consumer.listener.MsgListener;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
@@ -32,17 +33,8 @@ public class MsgConsumer {
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue(queueName);
             consumer = session.createConsumer(destination);
-            Message message = consumer.receive(timeoutMillis);
+            consumer.setMessageListener(new MsgListener());
 
-            if (message instanceof TextMessage) {
-                LOG.debug("Received message, instance of TestMessage");
-                TextMessage textMessage = (TextMessage) message;
-                String text = textMessage.getText();
-                LOG.debug("Received: " + text);
-            } else {
-                LOG.debug("Received message, NOT instance of TestMessage");
-                LOG.debug("Received: " + message);
-            }
         } catch (javax.jms.JMSException e) {
             e.printStackTrace();
         }

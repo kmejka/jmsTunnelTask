@@ -10,6 +10,12 @@
     <logger name="pl.kmejka" additivity="false" level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </logger>
+    <logger name="ch.qos.logback" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.mortbay.jetty" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </logger>
 
     <root level="ERROR">
         <appender-ref ref="STDOUT"/>

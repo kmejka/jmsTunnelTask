@@ -10,18 +10,19 @@ import pl.kmejka.test.jmsTunnel.server.QueueBroker;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        String queueAddressServer = "tcp://localhost:12345";
-        String queueAddressConsumers = "tcp://localhost:12345";
+        String queueAddressServer = "http://localhost:12345";
+        String queueAddressProducer = "http://localhost:12345";
+        String queueAddressConsumer = "http://localhost:12345";
         String queueName = "fred";
 
         QueueBroker queueBroker = new QueueBroker();
         queueBroker.startQueue(queueName, queueAddressServer);
 
         MsgProducer msgProducer = new MsgProducer();
-        msgProducer.sendMessage("Chcieliście wydymać freda, to teraz fred wydyma was", queueName, queueAddressConsumers);
+        msgProducer.sendMessage("Chcieliście wydymać freda, to teraz fred wydyma was", queueName, queueAddressProducer);
 
         MsgConsumer msgConsumer = new MsgConsumer();
-        msgConsumer.startMessageConsumer(1000, queueName, queueAddressConsumers);
+        msgConsumer.startMessageConsumer(1000, queueName, queueAddressConsumer);
 
         queueBroker.stopQueue();
     }
