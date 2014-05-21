@@ -1,4 +1,4 @@
-package pl.kmejka.test.jmsTunnel.producer;
+package pl.kmejka.test.jmsTunnel.producer.response;
 
 
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -16,9 +16,9 @@ import javax.jms.TextMessage;
 /**
  * Created by kmejka on 20.05.14.
  */
-public class MsgProducer {
+public class Responder {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MsgProducer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Responder.class);
 
 
     public void sendMessage(final String messageText, final String queueName, final String queueAddress) {

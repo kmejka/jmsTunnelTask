@@ -1,24 +1,22 @@
-package pl.kmejka.test.jmsTunnel.consumer;
+package pl.kmejka.test.jmsTunnel.consumer.response;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.kmejka.test.jmsTunnel.consumer.listener.MsgListener;
+import pl.kmejka.test.jmsTunnel.consumer.response.listener.MsgListener;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 /**
  * Created by kmejka on 20.05.14.
  */
-public class MsgConsumer {
+public class ResponseMessageConsumer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MsgConsumer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ResponseMessageConsumer.class);
 
     public void startMessageConsumer(final int timeoutMillis, final String queueName, final String queueAddress) {
         Connection connection = null;

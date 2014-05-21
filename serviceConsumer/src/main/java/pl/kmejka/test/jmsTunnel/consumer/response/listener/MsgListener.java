@@ -1,4 +1,4 @@
-package pl.kmejka.test.jmsTunnel.consumer.listener;
+package pl.kmejka.test.jmsTunnel.consumer.response.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
