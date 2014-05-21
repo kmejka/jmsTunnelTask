@@ -3,7 +3,7 @@ package pl.kmejka.test.jmsTunnel.consumer.response;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.kmejka.test.jmsTunnel.consumer.response.listener.MsgListener;
+import pl.kmejka.test.jmsTunnel.consumer.response.listener.ResponseMessageListener;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
@@ -31,7 +31,7 @@ public class ResponseMessageConsumer {
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue(queueName);
             consumer = session.createConsumer(destination);
-            consumer.setMessageListener(new MsgListener());
+            consumer.setMessageListener(new ResponseMessageListener());
 
         } catch (javax.jms.JMSException e) {
             e.printStackTrace();

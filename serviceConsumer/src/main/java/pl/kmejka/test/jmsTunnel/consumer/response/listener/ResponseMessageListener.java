@@ -11,13 +11,13 @@ import javax.jms.TextMessage;
 /**
  * Created by kmejka on 21.05.14.
  */
-public class MsgListener implements MessageListener {
+public class ResponseMessageListener implements MessageListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MsgListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ResponseMessageListener.class);
 
     @Override
     public void onMessage(Message message) {
-        LOG.debug("OnMessage in MsgListener");
+        LOG.debug("OnMessage in ResponseMessageListener");
         if (message instanceof TextMessage) {
             LOG.debug("Received message, instance of TestMessage");
             TextMessage textMessage = (TextMessage) message;

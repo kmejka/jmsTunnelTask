@@ -16,9 +16,9 @@ import javax.jms.TextMessage;
 /**
  * Created by kmejka on 20.05.14.
  */
-public class Responder {
+public class ResposeSender {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Responder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ResposeSender.class);
 
 
     public void sendMessage(final String messageText, final String queueName, final String queueAddress) {
