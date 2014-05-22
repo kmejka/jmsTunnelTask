@@ -34,20 +34,6 @@ public class GatewayHttpMessageSender {
 
         httpClient = HttpClients.createDefault();
         this.sendToEndpoint = sendToEndpoint;
-//
-//        try {
-//            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(sendToQueueAddress);
-//            this.connection = connectionFactory.createConnection();
-//            connection.start();
-//
-//            this.session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-//            Destination destination = session.createQueue(sendToQueueName);
-//
-//            this.producer = session.createProducer(destination);
-//
-//        } catch (JMSException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public void destroyResponseSender() {
@@ -88,13 +74,6 @@ public class GatewayHttpMessageSender {
             }
         }
 
-//        try {
-//            TextMessage message = session.createTextMessage();
-//            message.setText(textMessage);
-//            this.producer.send(message);
-//        } catch (JMSException e) {
-//            e.printStackTrace();
-//        }
     }
 
 }

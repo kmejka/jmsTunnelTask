@@ -18,11 +18,10 @@ import javax.jms.Session;
 public class RequestMessageConsumer {
 
     private static final Logger LOG = LoggerFactory.getLogger(RequestMessageConsumer.class);
-
+    private final ResponseSender responseSender;
     private Connection connection;
     private Session session;
     private MessageConsumer consumer;
-    private final ResponseSender responseSender;
 
     public RequestMessageConsumer(final String queueName, final String queueAddress, final ResponseSender responseSender) {
         LOG.debug("Starting request message consumer with queueName: {} and queueAddress: {}", queueName, queueAddress);

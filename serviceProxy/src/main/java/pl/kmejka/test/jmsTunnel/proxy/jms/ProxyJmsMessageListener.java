@@ -35,7 +35,7 @@ public class ProxyJmsMessageListener implements MessageListener {
             }
             LOG.debug("Received: " + text);
             LOG.debug("Forwarding");
-            proxyHttpMessageSender.sendMessage(text + "\tPROXY FORWARDING MESSAGE\t");
+            proxyHttpMessageSender.sendMessage(text + "\tPROXY FORWARDING MESSAGE TO HTTP\t");
         } else {
             LOG.debug("Received message, NOT instance of TestMessage");
             LOG.debug("Received: " + message);

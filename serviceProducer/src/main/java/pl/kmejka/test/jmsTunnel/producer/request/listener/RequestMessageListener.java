@@ -37,7 +37,7 @@ public class RequestMessageListener implements MessageListener {
             }
             LOG.debug("Received: " + text);
             LOG.debug("Responding");
-            responseSender.sendMessage(text + "\tPRODUCER RESPONDING\t");
+            responseSender.sendMessage(text + "\t~~PRODUCER RESPONDING~~\t");
         } else {
             LOG.debug("Received message, NOT instance of TestMessage");
             LOG.debug("Received: " + message);

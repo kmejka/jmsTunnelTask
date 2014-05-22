@@ -23,9 +23,6 @@ import java.util.List;
 public class ProxyHttpMessageSender {
     private static final Logger LOG = LoggerFactory.getLogger(ProxyHttpMessageSender.class);
 
-    //    private Connection connection;
-//    private Session session;
-//    private MessageProducer producer;
     private final CloseableHttpClient httpClient;
     private final String sendToEndpoint;
 
@@ -34,20 +31,6 @@ public class ProxyHttpMessageSender {
 
         httpClient = HttpClients.createDefault();
         this.sendToEndpoint = sendToEndpoint;
-//
-//        try {
-//            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(sendToQueueAddress);
-//            this.connection = connectionFactory.createConnection();
-//            connection.start();
-//
-//            this.session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-//            Destination destination = session.createQueue(sendToQueueName);
-//
-//            this.producer = session.createProducer(destination);
-//
-//        } catch (JMSException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public void destroyResponseSender() {
@@ -87,14 +70,5 @@ public class ProxyHttpMessageSender {
                 e.printStackTrace();
             }
         }
-
-//        try {
-//            TextMessage message = session.createTextMessage();
-//            message.setText(textMessage);
-//            this.producer.send(message);
-//        } catch (JMSException e) {
-//            e.printStackTrace();
-//        }
     }
-
 }
