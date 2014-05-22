@@ -11,8 +11,8 @@
     <modules>
         <module>serviceConsumer</module>
         <module>serviceProducer</module>
-        <module>server</module>
-        <module>proxy</module>
+        <module>producerGateway</module>
+        <module>serviceProxy</module>
         <module>runner</module>
     </modules>
     <dependencies>
