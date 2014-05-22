@@ -13,7 +13,6 @@
         <module>serviceProducer</module>
         <module>gateway</module>
         <module>serviceProxy</module>
-        <module>runner</module>
     </modules>
     <dependencies>
         <dependency>
