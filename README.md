@@ -4,14 +4,14 @@ This project presents a simple solution for the JMS over HTTP Tunnelling problem
 ##Contents
 ###ServiceProducer
 A service which has two queues working over tcp protocol. It does not do anything special, listens to Requests queue, after receiving a message enriches it with 
-text "PRODUCER RESPONDING" and puts it as a JMS message to the Response queue
+text "~~PRODUCER RESPONDING~~" and puts it as a JMS message to the Response queue
 
 ###ServiceConsumer
-A service which has sends a message to one queue and listens for a response on the other.
+A service which sends a message "~~ORIGINAL MESSAGE FROM SERVICE CONSUMER~~" to one queue and listens for a response on the other.
  
 ###ServiceProxy
 A proxy which has two queues and one http endpoint. 
-The proxy listens to the Request queue, after receiving a message, enriches it with text "PROXY FORWARDING MESSAGE"
+The proxy listens to the Request queue, after receiving a message, enriches it with text "PROXY FORWARDING MESSAGE TO HTTP"
 and sends it via http POST to a specified endpoint.
 The proxy then broadcasts an endpoint, from which, after receiving a message, enriches it with text "PROXY FORWARDING TO JMS" and puts it on a jms Response queue.
 
