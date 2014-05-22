@@ -1,8 +1,8 @@
-package pl.kmejka.test.jmsTunnel.producerGateway.response.listener;
+package pl.kmejka.test.jmsTunnel.gateway.jms;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.kmejka.test.jmsTunnel.producerGateway.response.GatewayResponseSender;
+import pl.kmejka.test.jmsTunnel.gateway.http.GatewayHttpMessageSender;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -12,13 +12,13 @@ import javax.jms.TextMessage;
 /**
  * Created by kmejka on 22.05.14.
  */
-public class GatewayResponseListener implements MessageListener {
+public class GatewayJmsMessageListener implements MessageListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GatewayResponseListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GatewayJmsMessageListener.class);
 
-    private final GatewayResponseSender sender;
+    private final GatewayHttpMessageSender sender;
 
-    public GatewayResponseListener(GatewayResponseSender sender) {
+    public GatewayJmsMessageListener(GatewayHttpMessageSender sender) {
         this.sender = sender;
     }
 
@@ -36,7 +36,7 @@ public class GatewayResponseListener implements MessageListener {
             }
             LOG.debug("Received: " + text);
             LOG.debug("Responding");
-            sender.sendMessage("Forwarding message with text: '"+text+"'");
+            sender.sendMessage(text+"\tGATEWAY FORWARDING MESSAGE HTTP\t");
         } else {
             LOG.debug("Received message, NOT instance of TestMessage");
             LOG.debug("Received: " + message);

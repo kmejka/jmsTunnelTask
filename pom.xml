@@ -11,7 +11,7 @@
     <modules>
         <module>serviceConsumer</module>
         <module>serviceProducer</module>
-        <module>producerGateway</module>
+        <module>gateway</module>
         <module>serviceProxy</module>
         <module>runner</module>
     </modules>
@@ -66,5 +66,11 @@
             <artifactId>jetty-server</artifactId>
             <version>8.1.10.v20130312</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.3</version>
+        </dependency>
+
     </dependencies>
 </project>

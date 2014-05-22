@@ -13,31 +13,44 @@ public class ServiceProducer {
 
     private static final Logger LOG = LoggerFactory.getLogger(ServiceProducer.class);
 
-    private final BrokerService producerRequestQueueBroker;
-    private final BrokerService producerResponseQueueBroker;
-
-    private final RequestMessageConsumer requestMessageConsumer;
-
-    public ServiceProducer(final String requestQueueName, final String requestQueueAddress, final String responseQueueName, final String responseQueueAddress) {
+    public static void main(String[] args) {
         LOG.debug("Initializing service producer");
-        this.producerRequestQueueBroker = new BrokerService();
-        this.producerResponseQueueBroker = new BrokerService();
-        this.constructAndStartQueue(producerRequestQueueBroker, requestQueueName, requestQueueAddress);
-        this.constructAndStartQueue(producerResponseQueueBroker, responseQueueName, responseQueueAddress);
+        final String requestQueueName = "producerRequestQueue";
+        final String requestQueueAddress = "tcp://localhost:10000";
+        final String responseQueueName = "producerResponseQueue";
+        final String responseQueueAddress = "tcp://localhost:10001";
+
+        final BrokerService producerRequestQueueBroker = new BrokerService();
+        final BrokerService producerResponseQueueBroker = new BrokerService();
+
+        constructAndStartQueue(producerRequestQueueBroker, requestQueueName, requestQueueAddress);
+        constructAndStartQueue(producerResponseQueueBroker, responseQueueName, responseQueueAddress);
 
         LOG.debug("Creating response sender");
         ResponseSender responseSender = new ResponseSender(responseQueueName, responseQueueAddress);
-        requestMessageConsumer = new RequestMessageConsumer(requestQueueName, requestQueueAddress, responseSender);
-
+        final RequestMessageConsumer requestMessageConsumer = new RequestMessageConsumer(requestQueueName, requestQueueAddress, responseSender);
     }
 
-    public void destroyServiceProducer() {
-        stopQueue(producerRequestQueueBroker);
-        stopQueue(producerResponseQueueBroker);
-        this.requestMessageConsumer.destroyRequestMessageConsumer();
-    }
+//    public ServiceProducer(final String requestQueueName, final String requestQueueAddress, final String responseQueueName, final String responseQueueAddress) {
+//
+//        this.producerRequestQueueBroker = new BrokerService();
+//        this.producerResponseQueueBroker = new BrokerService();
+//        this.constructAndStartQueue(producerRequestQueueBroker, requestQueueName, requestQueueAddress);
+//        this.constructAndStartQueue(producerResponseQueueBroker, responseQueueName, responseQueueAddress);
+//
+//        LOG.debug("Creating response sender");
+//        ResponseSender responseSender = new ResponseSender(responseQueueName, responseQueueAddress);
+//        requestMessageConsumer = new RequestMessageConsumer(requestQueueName, requestQueueAddress, responseSender);
+//
+//    }
+//
+//    public void destroyServiceProducer() {
+//        stopQueue(producerRequestQueueBroker);
+//        stopQueue(producerResponseQueueBroker);
+//        this.requestMessageConsumer.destroyRequestMessageConsumer();
+//    }
 
-    private void constructAndStartQueue(final BrokerService queueBrokerServiceRef, final String queueName, final String queueAddress) {
+    private static void constructAndStartQueue(final BrokerService queueBrokerServiceRef, final String queueName, final String queueAddress) {
         LOG.debug("Starting producer queue broker with name: {} and queueAddress {}", queueName, queueAddress);
         queueBrokerServiceRef.setBrokerName(queueName);
         try {

@@ -1,9 +1,9 @@
-package pl.kmejka.test.jmsTunnel.producerGateway.response;
+package pl.kmejka.test.jmsTunnel.gateway.jms;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.kmejka.test.jmsTunnel.producerGateway.response.listener.GatewayResponseListener;
+import pl.kmejka.test.jmsTunnel.gateway.http.GatewayHttpMessageSender;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
@@ -14,16 +14,16 @@ import javax.jms.Session;
 /**
  * Created by kmejka on 22.05.14.
  */
-public class GatewayResponseConsumer {
+public class GatewayJmsMessageConsumer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GatewayResponseConsumer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GatewayJmsMessageConsumer.class);
 
     private Connection connection;
     private Session session;
     private MessageConsumer consumer;
 
-    public GatewayResponseConsumer(final String listenToQueueName, final String listenToQueueAddress, final String sendToQueueName, final String sendToQueueAddress) {
-        LOG.debug("Starting gateway request message consumer with listenToQueueName: {} and listenToQueueAddress: {}", listenToQueueName, listenToQueueAddress);
+    public GatewayJmsMessageConsumer(final String listenToQueueName, final String listenToQueueAddress, final String forwardToEndpoint) {
+        LOG.debug("Starting gateway request message consumer with listenToQueueName: {} and listenToQueueAddress: {} and forwardToEndpoint {}", listenToQueueName, listenToQueueAddress, forwardToEndpoint);
         try {
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(listenToQueueAddress);
             this.connection = connectionFactory.createConnection();
@@ -33,7 +33,7 @@ public class GatewayResponseConsumer {
             Destination destination = session.createQueue(listenToQueueName);
 
             this.consumer = session.createConsumer(destination);
-            consumer.setMessageListener(new GatewayResponseListener(new GatewayResponseSender(sendToQueueName, sendToQueueAddress)));
+            consumer.setMessageListener(new GatewayJmsMessageListener(new GatewayHttpMessageSender(forwardToEndpoint)));
 
         } catch (javax.jms.JMSException e) {
             e.printStackTrace();

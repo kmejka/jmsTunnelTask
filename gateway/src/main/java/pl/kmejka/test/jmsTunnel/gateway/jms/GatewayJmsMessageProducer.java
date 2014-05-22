@@ -1,4 +1,4 @@
-package pl.kmejka.test.jmsTunnel.producerGateway.response;
+package pl.kmejka.test.jmsTunnel.gateway.jms;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
@@ -14,22 +14,24 @@ import javax.jms.TextMessage;
 /**
  * Created by kmejka on 22.05.14.
  */
-public class GatewayResponseSender {
-    private static final Logger LOG = LoggerFactory.getLogger(GatewayResponseSender.class);
+public class GatewayJmsMessageProducer {
+
+
+    private static final Logger LOG = LoggerFactory.getLogger(GatewayJmsMessageProducer.class);
 
     private Connection connection;
     private Session session;
     private MessageProducer producer;
 
-    public GatewayResponseSender(final String sendToQueueName, final String sendToQueueAddress) {
-        LOG.debug("Starting gateway response sender with sendToQueueName: {} and sendToQueueAddress: {}", sendToQueueName, sendToQueueAddress);
+    public GatewayJmsMessageProducer(final String queueName, final String queueAddress) {
+        LOG.debug("Starting jms producer with queueName: {} and queueAddress: {}", queueName, queueAddress);
         try {
-            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(sendToQueueAddress);
+            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(queueAddress);
             this.connection = connectionFactory.createConnection();
             connection.start();
 
             this.session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = session.createQueue(sendToQueueName);
+            Destination destination = session.createQueue(queueName);
 
             this.producer = session.createProducer(destination);
 
@@ -39,7 +41,7 @@ public class GatewayResponseSender {
     }
 
     public void destroyResponseSender() {
-        LOG.debug("Closing gateway response sender");
+        LOG.debug("Closing jms producer");
         try {
             if (session != null) {
                 session.close();
@@ -56,7 +58,7 @@ public class GatewayResponseSender {
     }
 
     public void sendMessage(final String textMessage) {
-        LOG.debug("Gateway sending message: {}", textMessage);
+        LOG.debug("Received order to send message: {}", textMessage);
         try {
             TextMessage message = session.createTextMessage();
             message.setText(textMessage);
@@ -65,5 +67,4 @@ public class GatewayResponseSender {
             e.printStackTrace();
         }
     }
-
 }

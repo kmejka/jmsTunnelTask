@@ -1,31 +1,28 @@
-package pl.kmejka.test.jmsTunnel.producer.response;
-
+package pl.kmejka.test.jmsTunnel.proxy.jms;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.Connection;
-import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.MessageProducer;
+import javax.jms.MessageConsumer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 /**
  * Created by kmejka on 20.05.14.
  */
-public class ResponseSender {
+public class ProxyJmsMessageConsumer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ResponseSender.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProxyJmsMessageConsumer.class);
 
     private Connection connection;
     private Session session;
-    private MessageProducer producer;
+    private MessageConsumer consumer;
 
-    public ResponseSender(final String queueName, final String queueAddress) {
-        LOG.debug("Starting response sender with queueName: {} and queueAddress: {}", queueName, queueAddress);
+    public ProxyJmsMessageConsumer(final String queueName, final String queueAddress, final ProxyJmsMessageListener proxyJmsMessageListener) {
+        LOG.debug("Starting response message consumer with queueName: {} and queueAddress: {}", queueName, queueAddress);
         try {
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(queueAddress);
             this.connection = connectionFactory.createConnection();
@@ -34,15 +31,16 @@ public class ResponseSender {
             this.session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue(queueName);
 
-            this.producer = session.createProducer(destination);
+            this.consumer = session.createConsumer(destination);
+            consumer.setMessageListener(proxyJmsMessageListener);
 
         } catch (JMSException e) {
             e.printStackTrace();
         }
     }
 
-    public void destroyResponseSender() {
-        LOG.debug("Closing response sender");
+    public void destroyResponseMessageConsumer() {
+        LOG.debug("Closing response message consumer");
         try {
             if (session != null) {
                 session.close();
@@ -50,22 +48,12 @@ public class ResponseSender {
             if (connection != null) {
                 connection.close();
             }
-            if (producer != null) {
-                producer.close();
+            if (consumer != null) {
+                consumer.close();
             }
         } catch (JMSException e) {
             e.printStackTrace();
         }
     }
 
-    public void sendMessage(final String textMessage) {
-        LOG.debug("Received order to send message: {}", textMessage);
-        try {
-            TextMessage message = session.createTextMessage();
-            message.setText(textMessage);
-            this.producer.send(message);
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
-    }
 }

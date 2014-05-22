@@ -1,12 +1,10 @@
-package pl.kmejka.test.jmsTunnel.producer.response;
-
+package pl.kmejka.test.jmsTunnel.proxy.jms;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.Connection;
-import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
@@ -14,18 +12,19 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 /**
- * Created by kmejka on 20.05.14.
+ * Created by kmejka on 22.05.14.
  */
-public class ResponseSender {
+public class ProxyJmsMessageProducer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ResponseSender.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(ProxyJmsMessageProducer.class);
 
     private Connection connection;
     private Session session;
     private MessageProducer producer;
 
-    public ResponseSender(final String queueName, final String queueAddress) {
-        LOG.debug("Starting response sender with queueName: {} and queueAddress: {}", queueName, queueAddress);
+    public ProxyJmsMessageProducer(final String queueName, final String queueAddress) {
+        LOG.debug("Starting jms producer with queueName: {} and queueAddress: {}", queueName, queueAddress);
         try {
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(queueAddress);
             this.connection = connectionFactory.createConnection();
@@ -42,7 +41,7 @@ public class ResponseSender {
     }
 
     public void destroyResponseSender() {
-        LOG.debug("Closing response sender");
+        LOG.debug("Closing jms producer");
         try {
             if (session != null) {
                 session.close();
