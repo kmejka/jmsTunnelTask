@@ -18,39 +18,43 @@ public class ResponseMessageConsumer {
 
     private static final Logger LOG = LoggerFactory.getLogger(ResponseMessageConsumer.class);
 
-    public void startMessageConsumer(final int timeoutMillis, final String queueName, final String queueAddress) {
-        Connection connection = null;
-        Session session = null;
-        MessageConsumer consumer = null;
+    private Connection connection;
+    private Session session;
+    private MessageConsumer consumer;
+
+    public ResponseMessageConsumer(final String queueName, final String queueAddress) {
+        LOG.debug("Starting response message consumer with queueName: {} and queueAddress: {}", queueName, queueAddress);
         try {
-            LOG.debug("Starting message consumer with queueName: {} and queueAddress: {}", queueName, queueAddress);
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(queueAddress);
-            connection = connectionFactory.createConnection();
+            this.connection = connectionFactory.createConnection();
             connection.start();
 
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            this.session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue(queueName);
-            consumer = session.createConsumer(destination);
+
+            this.consumer = session.createConsumer(destination);
             consumer.setMessageListener(new ResponseMessageListener());
 
         } catch (javax.jms.JMSException e) {
             e.printStackTrace();
         }
-        finally {
-            LOG.debug("Closing message consumer");
-            try {
-                if (session != null) {
-                    session.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-                if (consumer != null) {
-                    consumer.close();
-                }
-            } catch (JMSException e) {
-                e.printStackTrace();
+    }
+
+    public void destroyResponseMessageConsumer() {
+        LOG.debug("Closing response message consumer");
+        try {
+            if (session != null) {
+                session.close();
             }
+            if (connection != null) {
+                connection.close();
+            }
+            if (consumer != null) {
+                consumer.close();
+            }
+        } catch (JMSException e) {
+            e.printStackTrace();
         }
     }
+
 }

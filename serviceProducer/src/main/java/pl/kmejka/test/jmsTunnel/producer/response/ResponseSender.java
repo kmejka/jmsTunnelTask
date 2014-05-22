@@ -1,10 +1,12 @@
-package pl.kmejka.test.jmsTunnel.consumer.request;
+package pl.kmejka.test.jmsTunnel.producer.response;
+
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.Connection;
+import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
@@ -12,17 +14,17 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 /**
- * Created by kmejka on 21.05.14.
+ * Created by kmejka on 20.05.14.
  */
-public class RequestSender {
+public class ResponseSender {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RequestSender.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ResponseSender.class);
 
     private Connection connection;
     private Session session;
     private MessageProducer producer;
 
-    public RequestSender(final String queueName, final String queueAddress) {
+    public ResponseSender(final String queueName, final String queueAddress) {
         LOG.debug("Starting request sender with queueName: {} and queueAddress: {}", queueName, queueAddress);
         try {
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(queueAddress);
@@ -66,5 +68,4 @@ public class RequestSender {
             e.printStackTrace();
         }
     }
-
 }

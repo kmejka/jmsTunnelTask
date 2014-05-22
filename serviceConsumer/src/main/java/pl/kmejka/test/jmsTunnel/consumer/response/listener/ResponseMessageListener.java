@@ -17,7 +17,7 @@ public class ResponseMessageListener implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        LOG.debug("OnMessage in ResponseMessageListener");
+        LOG.debug("OnMessage in consumer ResponseMessageListener");
         if (message instanceof TextMessage) {
             LOG.debug("Received message, instance of TestMessage");
             TextMessage textMessage = (TextMessage) message;
