@@ -1,12 +1,10 @@
-package pl.kmejka.test.jmsTunnel.producer.response;
-
+package pl.kmejka.test.jmsTunnel.producerGateway.response;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.Connection;
-import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
@@ -14,25 +12,24 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 /**
- * Created by kmejka on 20.05.14.
+ * Created by kmejka on 22.05.14.
  */
-public class ResponseSender {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ResponseSender.class);
+public class GatewayResponseSender {
+    private static final Logger LOG = LoggerFactory.getLogger(GatewayResponseSender.class);
 
     private Connection connection;
     private Session session;
     private MessageProducer producer;
 
-    public ResponseSender(final String queueName, final String queueAddress) {
-        LOG.debug("Starting response sender with queueName: {} and queueAddress: {}", queueName, queueAddress);
+    public GatewayResponseSender(final String sendToQueueName, final String sendToQueueAddress) {
+        LOG.debug("Starting gateway response sender with sendToQueueName: {} and sendToQueueAddress: {}", sendToQueueName, sendToQueueAddress);
         try {
-            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(queueAddress);
+            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(sendToQueueAddress);
             this.connection = connectionFactory.createConnection();
             connection.start();
 
             this.session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = session.createQueue(queueName);
+            Destination destination = session.createQueue(sendToQueueName);
 
             this.producer = session.createProducer(destination);
 
@@ -42,7 +39,7 @@ public class ResponseSender {
     }
 
     public void destroyResponseSender() {
-        LOG.debug("Closing response sender");
+        LOG.debug("Closing gateway response sender");
         try {
             if (session != null) {
                 session.close();
@@ -59,7 +56,7 @@ public class ResponseSender {
     }
 
     public void sendMessage(final String textMessage) {
-        LOG.debug("Sending message: {}", textMessage);
+        LOG.debug("Gateway sending message: {}", textMessage);
         try {
             TextMessage message = session.createTextMessage();
             message.setText(textMessage);
@@ -68,4 +65,5 @@ public class ResponseSender {
             e.printStackTrace();
         }
     }
+
 }

@@ -34,7 +34,7 @@ public class ServiceProducer {
     public void destroyServiceProducer() {
         stopQueue(producerRequestQueueBroker);
         stopQueue(producerResponseQueueBroker);
-        this.requestMessageConsumer.destroyResponseMessageConsumer();
+        this.requestMessageConsumer.destroyRequestMessageConsumer();
     }
 
     private void constructAndStartQueue(final BrokerService queueBrokerServiceRef, final String queueName, final String queueAddress) {
