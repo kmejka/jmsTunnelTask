@@ -36,7 +36,7 @@ public class GatewayJmsMessageListener implements MessageListener {
             }
             LOG.debug("Received: " + text);
             LOG.debug("Responding");
-            sender.sendMessage(text+"\tGATEWAY FORWARDING MESSAGE HTTP\t");
+            sender.sendMessage(text + "\tGATEWAY FORWARDING MESSAGE HTTP\t");
         } else {
             LOG.debug("Received message, NOT instance of TestMessage");
             LOG.debug("Received: " + message);

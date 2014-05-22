@@ -13,7 +13,7 @@ public class ServiceConsumer {
     private static final Logger LOG = LoggerFactory.getLogger(ServiceConsumer.class);
 
     public static void main(String[] args) {
-        LOG.debug("Initializing service consumer");
+        LOG.debug("Starting service consumer");
 
         final String requestQueueName = "proxyRequestQueue";
         final String requestQueueAddress = "tcp://localhost:20000";
@@ -21,14 +21,8 @@ public class ServiceConsumer {
         final String responseQueueAddress = "tcp://localhost:20001";
 
         ResponseMessageConsumer responseMessageConsumer = new ResponseMessageConsumer(responseQueueName, responseQueueAddress);
-        RequestSender requestSender = new RequestSender(requestQueueName, requestQueueAddress);;
+        RequestSender requestSender = new RequestSender(requestQueueName, requestQueueAddress);
 
         requestSender.sendMessage("\t~~ORIGINAL MESSAGE FROM SERVICE CONSUMER~~\t");
     }
-
-//    public void destroyServiceConsumer() {
-//        LOG.debug("Destroying service consumer");
-//        this.requestSender.destroyRequestSender();
-//        this.responseMessageConsumer.destroyResponseMessageConsumer();
-//    }
 }

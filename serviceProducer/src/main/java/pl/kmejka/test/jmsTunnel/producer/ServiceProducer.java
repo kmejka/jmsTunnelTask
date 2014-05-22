@@ -14,7 +14,7 @@ public class ServiceProducer {
     private static final Logger LOG = LoggerFactory.getLogger(ServiceProducer.class);
 
     public static void main(String[] args) {
-        LOG.debug("Initializing service producer");
+        LOG.debug("Starting service producer");
         final String requestQueueName = "producerRequestQueue";
         final String requestQueueAddress = "tcp://localhost:10000";
         final String responseQueueName = "producerResponseQueue";
@@ -31,25 +31,6 @@ public class ServiceProducer {
         final RequestMessageConsumer requestMessageConsumer = new RequestMessageConsumer(requestQueueName, requestQueueAddress, responseSender);
     }
 
-//    public ServiceProducer(final String requestQueueName, final String requestQueueAddress, final String responseQueueName, final String responseQueueAddress) {
-//
-//        this.producerRequestQueueBroker = new BrokerService();
-//        this.producerResponseQueueBroker = new BrokerService();
-//        this.constructAndStartQueue(producerRequestQueueBroker, requestQueueName, requestQueueAddress);
-//        this.constructAndStartQueue(producerResponseQueueBroker, responseQueueName, responseQueueAddress);
-//
-//        LOG.debug("Creating response sender");
-//        ResponseSender responseSender = new ResponseSender(responseQueueName, responseQueueAddress);
-//        requestMessageConsumer = new RequestMessageConsumer(requestQueueName, requestQueueAddress, responseSender);
-//
-//    }
-//
-//    public void destroyServiceProducer() {
-//        stopQueue(producerRequestQueueBroker);
-//        stopQueue(producerResponseQueueBroker);
-//        this.requestMessageConsumer.destroyRequestMessageConsumer();
-//    }
-
     private static void constructAndStartQueue(final BrokerService queueBrokerServiceRef, final String queueName, final String queueAddress) {
         LOG.debug("Starting producer queue broker with name: {} and queueAddress {}", queueName, queueAddress);
         queueBrokerServiceRef.setBrokerName(queueName);
@@ -62,13 +43,4 @@ public class ServiceProducer {
         }
         LOG.debug("Queue broker started");
     }
-
-    private void stopQueue(final BrokerService queueBrokerServiceRef) {
-        try {
-            queueBrokerServiceRef.stop();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

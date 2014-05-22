@@ -12,7 +12,7 @@ import javax.jms.TextMessage;
 /**
  * Created by kmejka on 21.05.14.
  */
-public class RequestMessageListener implements MessageListener{
+public class RequestMessageListener implements MessageListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(RequestMessageListener.class);
 

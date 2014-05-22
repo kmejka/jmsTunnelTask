@@ -18,6 +18,7 @@ public class ServiceProxy {
     private static final Logger LOG = LoggerFactory.getLogger(ServiceProxy.class);
 
     public static void main(String[] args) throws Exception {
+        LOG.debug("Starting service proxy");
         final int proxyEndpointPort = 8081;
         final String proxyRequestQueueName = "proxyRequestQueue";
         final String proxyRequestQueueAddress = "tcp://localhost:20000";
